@@ -16,22 +16,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abir.androidbasicpart1.composables.DataValueField
 import com.abir.androidbasicpart1.composables.ExpandableSection
 import com.abir.androidbasicpart1.data.apiDataMap
+import com.abir.androidbasicpart1.viewmodels.UserViewModel
 
 @Composable
-fun ApiIntegrationScreen() {
-    var selectedMethod by remember { mutableStateOf("GET") }
+fun ApiIntegrationScreen(userViewModel: UserViewModel = viewModel()) {
+    var selectedMethod by remember { mutableStateOf("Default") }
     var expandedRequest by remember { mutableStateOf(false) }
     var expandedResponse by remember { mutableStateOf(false) }
 
     // Fetch the data for the selected method
     val apiData = apiDataMap[selectedMethod] ?: return
+    val userData by remember { mutableStateOf(apiData) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -41,7 +43,11 @@ fun ApiIntegrationScreen() {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             listOf("GET", "POST", "PUT", "DELETE").forEach { method ->
                 Button(
-                    onClick = { selectedMethod = method },
+                    onClick = {
+                        selectedMethod = method
+                        // Fetch users when button is clicked
+                        userViewModel.getUsers()
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (selectedMethod == method) Color.Blue else Color.LightGray,
                         contentColor = Color.White
@@ -54,6 +60,12 @@ fun ApiIntegrationScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        if (selectedMethod != "Default") {
+            userData.status = userViewModel.code.toString()
+            userData.responseBody = userViewModel.responseBody.toString()
+            userData.responseHeaders = userViewModel.responseHeaders.toString()
+            userData.cookies = userViewModel.cookies.toString()
+        }
         // Expandable Request Section
         ExpandableSection(
             title = "Request",
@@ -74,10 +86,11 @@ fun ApiIntegrationScreen() {
             isExpanded = expandedResponse,
             onExpandChange = { expandedResponse = !expandedResponse }
         ) {
-            DataValueField(label = "Status", value = apiData.status)
-            DataValueField(label = "Body", value = apiData.responseBody)
-            DataValueField(label = "Header", value = apiData.responseHeaders)
-            DataValueField(label = "Cookies", value = apiData.cookies)
+            DataValueField(label = "Status", value = userData.status)
+            DataValueField(label = "Body", value = userData.responseBody)
+            DataValueField(label = "Header", value = userData.responseHeaders)
+            DataValueField(label = "Cookies", value = userData.cookies)
         }
     }
 }
+

@@ -1,17 +1,27 @@
 package com.abir.androidbasicpart1.data
 
 data class ApiScreenData(
-    val url: String,
-    val params: String,
-    val headers: String,
-    val body: String,
-    val status: String,
-    val responseBody: String,
-    val responseHeaders: String,
-    val cookies: String
+    var url: String,
+    var params: String,
+    var headers: String,
+    var body: String,
+    var status: String,
+    var responseBody: String,
+    var responseHeaders: String,
+    var cookies: String
 )
 
 val apiDataMap = mapOf(
+    "Default" to ApiScreenData(
+        url = "https://api.example.com/get",
+        params = "id=0",
+        headers = "Authorization: Bearer token",
+        body = "No body",
+        status = "200 OK",
+        responseBody = "{ 'id': 0, 'name': 'John Doe' }",
+        responseHeaders = "Content-Type: application/json",
+        cookies = "sessionId=abc123"
+    ),
     "GET" to ApiScreenData(
         url = "https://api.example.com/get",
         params = "id=1",

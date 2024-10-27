@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    // 1. Kotlin Annotation Processing Tool Plugin
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -73,4 +75,9 @@ dependencies {
 
     // Coroutines for background processing
     implementation(libs.kotlinx.coroutines.android)
+
+    //Lifecycle
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
