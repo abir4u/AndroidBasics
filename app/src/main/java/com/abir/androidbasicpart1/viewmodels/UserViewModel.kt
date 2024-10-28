@@ -103,4 +103,30 @@ class UserViewModel : ViewModel() {
             }
         }
     }
+
+    fun deleteConversation(userId: String) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.deleteConversation(userId)
+                if (response.isSuccessful && response.body() != null) {
+                    // Extract the success message from the response body
+                    isSuccess = true
+                    responseBody = response.body() ?: emptyMap()
+                } else {
+                    // Handle unsuccessful response
+                    isSuccess = false
+                    responseBody = response.body() ?: emptyMap()
+                }
+
+                populateMandatoryParams(response)
+
+            } catch (e: IOException) {
+                isSuccess = false
+                errorMessage = "Network error: ${e.message}"
+            } catch (e: HttpException) {
+                isSuccess = false
+                errorMessage = "Network error: ${e.message}"
+            }
+        }
+    }
 }

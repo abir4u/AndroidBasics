@@ -50,6 +50,7 @@ fun ApiIntegrationScreen(userViewModel: UserViewModel = viewModel()) {
                             "GET" -> userViewModel.getUsers()
                             "POST" -> userViewModel.newUserConversation("1003")
                             "PUT" -> userViewModel.updateConversation("1002")
+                            "DELETE" -> userViewModel.deleteConversation("1003")
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
