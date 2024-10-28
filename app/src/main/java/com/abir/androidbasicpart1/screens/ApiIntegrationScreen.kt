@@ -45,8 +45,11 @@ fun ApiIntegrationScreen(userViewModel: UserViewModel = viewModel()) {
                 Button(
                     onClick = {
                         selectedMethod = method
-                        // Fetch users when button is clicked
-                        userViewModel.getUsers()
+                        // Make API call on button click, and store the response
+                        when (method) {
+                            "GET" -> userViewModel.getUsers()
+                            "POST" -> userViewModel.newUserConversation("1003")
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (selectedMethod == method) Color.Blue else Color.LightGray,

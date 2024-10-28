@@ -23,24 +23,24 @@ val apiDataMap = mapOf(
         cookies = "sessionId=abc123"
     ),
     "GET" to ApiScreenData(
-        url = "https://api.example.com/get",
-        params = "id=1",
-        headers = "Authorization: Bearer token 1",
-        body = "No body 1",
-        status = "200 OK",
-        responseBody = "{ 'id': 1, 'name': 'John Doe' }",
-        responseHeaders = "Content-Type: application/json",
-        cookies = "sessionId=abc123"
+        url = "/get-users",
+        params = "No params",
+        headers = "Authorization: Bearer token",
+        body = "No body",
+        status = "Yet to receive",
+        responseBody = "Yet to receive",
+        responseHeaders = "Yet to receive",
+        cookies = "None"
     ),
     "POST" to ApiScreenData(
-        url = "https://api.example.com/post",
-        params = "id=2",
-        headers = "Authorization: Bearer token 2",
-        body = "No body 2",
-        status = "200 OK",
-        responseBody = "{ 'id': 2, 'name': 'John Doe' }",
-        responseHeaders = "Content-Type: application/json",
-        cookies = "sessionId=abc456"
+        url = "/new-user-conversation",
+        params = "No params",
+        headers = "Authorization: Bearer token",
+        body = "{ 'user_id': '1003' }",
+        status = "Yet to receive",
+        responseBody = "Yet to receive",
+        responseHeaders = "Yet to receive",
+        cookies = "None"
     ),
     "PUT" to ApiScreenData(
         url = "https://api.example.com/put",
