@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abir.androidbasicpart1.api.RetrofitInstance
 import com.abir.androidbasicpart1.api.UserRequest
-import com.abir.androidbasicpart1.data.User
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -16,8 +15,7 @@ import java.io.IOException
 class UserViewModel : ViewModel() {
 
     var responseBody by mutableStateOf<List<Any>>(emptyList())
-    var users by mutableStateOf<List<User>>(emptyList())
-    var errorMessage by mutableStateOf("")
+    private var errorMessage by mutableStateOf("")
     var code by mutableIntStateOf(0)
     var responseHeaders by mutableStateOf<Map<String, List<String>>>(emptyMap()) // Map for headers
     var cookies by mutableStateOf<List<String>>(emptyList()) // List for cookies
@@ -27,12 +25,7 @@ class UserViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = RetrofitInstance.api.getUsers()
-                if (response.isSuccessful) {
-                    isSuccess = true
-                    users = response.body() ?: emptyList()
-                } else {
-                    isSuccess = false
-                }
+                isSuccess = response.isSuccessful
                 responseBody = response.body() ?: emptyList()
                 code = response.code()
                 // Extract headers and store them in responseHeaders
