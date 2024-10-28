@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abir.androidbasicpart1.api.RetrofitInstance
+import com.abir.androidbasicpart1.api.UpdateRequest
 import com.abir.androidbasicpart1.api.UserRequest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -48,12 +49,11 @@ class UserViewModel : ViewModel() {
     fun newUserConversation(userId: String) {
         viewModelScope.launch {
             try {
-                val requestBody = UserRequest(user_Id = userId)
+                val requestBody = UserRequest(user_id = userId)
                 val response = RetrofitInstance.api.newUserConversation(requestBody)
 
                 if (response.isSuccessful && response.body() != null) {
                     isSuccess = true
-                    // Extract message or status from response
                 } else {
                     isSuccess = false
                     // Handle unsuccessful response
@@ -62,6 +62,43 @@ class UserViewModel : ViewModel() {
                 responseBody = response.body() ?: emptyMap()
                 populateMandatoryParams(response)
             } catch (e: Exception) {
+                errorMessage = "Network error: ${e.message}"
+            }
+        }
+    }
+
+    fun updateConversation(userId: String) {
+        viewModelScope.launch {
+            try {
+                // Prepare the request body
+                val updateRequest = UpdateRequest(
+                    record = listOf(
+                        mapOf("user" to "Howdy!", "ai" to "Howdy, how are you?"),
+                        mapOf(
+                            "user" to "Perfect",
+                            "ai" to "Glad to hear that. How can I help you today?"
+                        )
+                    ),
+                    timestamp = ""
+                )
+
+                // Make the API call
+                val response = RetrofitInstance.api.updateConversation(userId, updateRequest)
+
+                if (response.isSuccessful && response.body() != null) {
+                    // Extract the success message from the response body
+                    isSuccess = true
+                    responseBody = response.body() ?: emptyMap()
+                } else {
+                    isSuccess = false
+                    // Handle unsuccessful response
+                    responseBody = response.body() ?: emptyMap()
+                }
+
+                populateMandatoryParams(response)
+
+            } catch (e: Exception) {
+                isSuccess = false
                 errorMessage = "Network error: ${e.message}"
             }
         }
