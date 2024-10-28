@@ -140,56 +140,70 @@ fun ApiIntegrationScreen() {
     // Fetch the data for the selected method
     val apiData = apiDataMap[selectedMethod] ?: return
 
-    Column(modifier = Modifier
+    LazyColumn(modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = 16.dp, vertical = 60.dp)) {
 
         // HTTP Method Tabs
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            listOf("GET", "POST", "PUT", "DELETE").forEach { method ->
-                Button(
-                    onClick = { selectedMethod = method },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (selectedMethod == method) Color.Blue else Color.LightGray,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(text = method)
+        item {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                listOf("GET", "POST", "PUT", "DELETE").forEach { method ->
+                    Button(
+                        onClick = { selectedMethod = method },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedMethod == method) Color.Blue else Color.LightGray,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(text = method)
+                    }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Expandable Request Section
-        ExpandableSection(
-            title = "Request",
-            isExpanded = expandedRequest,
-            onExpandChange = { expandedRequest = !expandedRequest }
-        ) {
-            DataValueField(label = "URL", value = apiData.url)
-            DataValueField(label = "Params", value = apiData.params)
-            DataValueField(label = "Header", value = apiData.headers)
-            DataValueField(label = "Body", value = apiData.body)
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        // Expandable Request Section
+        item {
+            ExpandableSection(
+                title = "Request",
+                isExpanded = expandedRequest,
+                onExpandChange = { expandedRequest = !expandedRequest }
+            ) {
+                DataValueField(label = "URL", value = apiData.url)
+                DataValueField(label = "Params", value = apiData.params)
+                DataValueField(label = "Header", value = apiData.headers)
+                DataValueField(label = "Body", value = apiData.body)
+            }
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
 
         // Expandable Response Section
-        ExpandableSection(
-            title = "Response",
-            isExpanded = expandedResponse,
-            onExpandChange = { expandedResponse = !expandedResponse }
-        ) {
-            DataValueField(label = "Status", value = apiData.status)
-            DataValueField(label = "Body", value = apiData.responseBody)
-            DataValueField(label = "Header", value = apiData.responseHeaders)
-            DataValueField(label = "Cookies", value = apiData.cookies)
+        item {
+            ExpandableSection(
+                title = "Response",
+                isExpanded = expandedResponse,
+                onExpandChange = { expandedResponse = !expandedResponse }
+            ) {
+                DataValueField(label = "Status", value = apiData.status)
+                DataValueField(label = "Body", value = apiData.responseBody)
+                DataValueField(label = "Header", value = apiData.responseHeaders)
+                DataValueField(label = "Cookies", value = apiData.cookies)
+            }
         }
     }
 }
 ```
 
-
-
 ## Part B: Integrate API calls and display the results
+
+### Step 1: Add dependencies
+
+### Step 2:
+
+### Step 3:
