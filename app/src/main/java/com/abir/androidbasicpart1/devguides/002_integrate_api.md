@@ -6,7 +6,7 @@ Then we will display the request and response information of the calls in the
 above designed interface.
 
 ## Part A: Implement UI design to display API results
-Feel free to skip to Part B if you are not interested in the UI design of the
+Feel free to skip to [Part B](https://github.com/abir4u/AndroidBasics/blob/main/app/src/main/java/com/abir/androidbasicpart1/devguides/002_integrate_api.md#part-b-integrate-api-calls-and-display-the-results) if you are not interested in the UI design of the
 screen used to display the API results and errors.
 
 Here’s a well-structured UI that will have the following features:
@@ -123,7 +123,7 @@ fun ExpandableSection(
 }
 ```
 
-### Part 4: Define the main Composable in the existing API Integration screen
+### Step 4: Define the main Composable in the existing API Integration screen
 This composable will contain the tab buttons, expandable sections, and non-editable 
 text fields.
 
@@ -202,7 +202,7 @@ fun ApiIntegrationScreen() {
 
 ## Part B: Integrate API calls and display the results
 
-## Step 0: Prerequisites - Spin up a GET, POST, PUT and DELETE API
+### Step 0: Prerequisites - Spin up a GET, POST, PUT and DELETE API
 Keep a GET, POST, PUT and DELETE API handy to use in the app. If you do not have one,
 use [my GitHub repo for PyMongo API](https://github.com/abir4u/pymongo-api-lisn2me).
 
@@ -585,3 +585,6 @@ accessible over the network (same local network), and you'd need to replace
 
 On Click of the GET, POST, PUT and DELETE buttons, the API should now work and it
 should display both positive and negative responses within the `ApiIntegrationScreen`.
+
+Below are some screenshots of how they will look:
+![get_call_screenshot.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Fget_call_screenshot.png) ![post_call_screenshot.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Fpost_call_screenshot.png) ![put_call_screenshot.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Fput_call_screenshot.png) ![delete_call_error_screenshot.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Fdelete_call_error_screenshot.png)
