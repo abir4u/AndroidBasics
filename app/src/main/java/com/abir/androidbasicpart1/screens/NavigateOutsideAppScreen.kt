@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.abir.androidbasicpart1.composables.ExternalMapButton
 
 @Composable
 fun NavigateOutsideAppScreen() {
@@ -19,7 +20,7 @@ fun NavigateOutsideAppScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Outside App")
+        Text(text = "Outside App")
+        ExternalMapButton(latitude = 37.7749, longitude = -122.4194)
     }
 }
