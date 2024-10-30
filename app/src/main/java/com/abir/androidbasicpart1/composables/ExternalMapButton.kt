@@ -19,7 +19,7 @@ import com.abir.androidbasicpart1.ui.theme.ThemeTextColor
 fun ExternalMapButton(latitude: Double, longitude: Double) {
     val context = LocalContext.current
     Button(
-        colors = ButtonDefaults.buttonColors(containerColor = ThemeBgColorPrimary),
+        colors = ButtonDefaults.buttonColors(containerColor = ThemeTextColor),
         onClick = {
         val gmmIntentUri = Uri.parse("geo:$latitude,$longitude")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -48,7 +48,7 @@ fun ExternalMapButton(latitude: Double, longitude: Double) {
     }) {
         Text("Open in Maps",
             modifier = Modifier.padding(10.dp),
-            color = ThemeTextColor,
+            color = ThemeBgColorPrimary,
             fontSize = 15.sp
         )
     }

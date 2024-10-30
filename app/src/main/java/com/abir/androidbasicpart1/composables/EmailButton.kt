@@ -22,7 +22,7 @@ fun EmailButton() {
     val subject = "Enquiry: Android Basics"
 
     Button(
-        colors = ButtonDefaults.buttonColors(containerColor = ThemeBgColorPrimary),
+        colors = ButtonDefaults.buttonColors(containerColor = ThemeTextColor),
         onClick = {
             // Create an email intent with ACTION_SEND
             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -40,7 +40,7 @@ fun EmailButton() {
         Text(
             text = "Send Email",
             modifier = Modifier.padding(10.dp),
-            color = ThemeTextColor,
+            color = ThemeBgColorPrimary,
             fontSize = 15.sp
         )
     }

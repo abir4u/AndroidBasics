@@ -27,7 +27,7 @@ fun DialButton(phoneNumber: String) {
     Column {
         // on below line adding a button to open URL
         Button(
-            colors = ButtonDefaults.buttonColors(containerColor = ThemeBgColorPrimary),
+            colors = ButtonDefaults.buttonColors(containerColor = ThemeTextColor),
             onClick = {
                 // on below line we are opening the dialer of our
                 // phone and passing phone number.
@@ -56,7 +56,7 @@ fun DialButton(phoneNumber: String) {
                 // padding, color and font size.
                 text = phoneNumber,
                 modifier = Modifier.padding(10.dp),
-                color = ThemeTextColor,
+                color = ThemeBgColorPrimary,
                 fontSize = 15.sp
             )
         }

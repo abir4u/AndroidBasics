@@ -19,7 +19,7 @@ fun OpenWebsiteButton(websiteLink: String) {
     val context = LocalContext.current
 
     Button(
-        colors = ButtonDefaults.buttonColors(containerColor = ThemeBgColorPrimary),
+        colors = ButtonDefaults.buttonColors(containerColor = ThemeTextColor),
         onClick = {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(websiteLink)
@@ -30,7 +30,7 @@ fun OpenWebsiteButton(websiteLink: String) {
         Text(
             text = "Go to Website",
             modifier = Modifier.padding(10.dp),
-            color = ThemeTextColor,
+            color = ThemeBgColorPrimary,
             fontSize = 15.sp
         )
     }
