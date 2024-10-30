@@ -90,7 +90,7 @@ Below is an example of a splash screen using Jetpack Compose.
 @Composable
 fun SplashScreen() {
     // Background color for the splash screen
-    val backgroundColor = SplashScreenBackground
+    val backgroundColor = ThemeBackgroundColor
 
     // Content of the Splash Screen
     Box(

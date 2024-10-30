@@ -20,13 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abir.androidbasicpart1.R
-import com.abir.androidbasicpart1.ui.theme.SplashScreenBackground
-import com.abir.androidbasicpart1.ui.theme.SplashScreenText
+import com.abir.androidbasicpart1.ui.theme.ThemeBgColorPrimary
+import com.abir.androidbasicpart1.ui.theme.ThemeTextColor
 
 @Composable
 fun SplashScreen() {
     // Background color for the splash screen
-    val backgroundColor = SplashScreenBackground
+    val backgroundColor = ThemeBgColorPrimary
 
     // Content of the Splash Screen
     Box(
@@ -55,7 +55,7 @@ fun SplashScreen() {
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.SansSerif,
-                    color = SplashScreenText
+                    color = ThemeTextColor
                 )
             )
         }
