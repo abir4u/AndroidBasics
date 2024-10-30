@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.abir.androidbasicpart1.composables.DialButton
+import com.abir.androidbasicpart1.composables.EmailButton
 import com.abir.androidbasicpart1.composables.ExternalMapButton
 
 @Composable
@@ -24,5 +25,6 @@ fun NavigateOutsideAppScreen() {
         Text(text = "Outside App")
         ExternalMapButton(latitude = 37.7749, longitude = -122.4194)
         DialButton(phoneNumber = "021029630")
+        EmailButton()
     }
 }
