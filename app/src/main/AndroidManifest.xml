@@ -27,5 +27,9 @@
             </intent-filter>
         </activity>
     </application>
+    <queries>
+        <!-- If you need to check if Google Maps is installed -->
+        <package android:name="com.google.android.apps.maps" />
+    </queries>
 
 </manifest>
