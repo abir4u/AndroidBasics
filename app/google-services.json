@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "95157934256",
+    "project_id": "android-basics-4afb4",
+    "storage_bucket": "android-basics-4afb4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95157934256:android:d139bc1c88af6737d30375",
+        "android_client_info": {
+          "package_name": "com.abir.androidbasicpart1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUUyDBNia83FwV1LkTMPdLE2KYnazARU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

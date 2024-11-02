@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    // 1. Kotlin Annotation Processing Tool Plugin
+    // Kotlin Annotation Processing Tool Plugin
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -60,7 +62,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,4 +80,10 @@ dependencies {
 
     //Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Firebase Authentication dependency
+    implementation(libs.firebase.auth)
+
+    // Jetpack Compose Material3 for UI
+    implementation(libs.material3)
 }
