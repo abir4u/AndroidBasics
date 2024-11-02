@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.abir.androidbasicpart1.composables.MenuItem
-import com.abir.androidbasicpart1.composables.MenuTopBar
+import com.abir.androidbasicpart1.composables.menu.MenuItem
+import com.abir.androidbasicpart1.composables.menu.MenuTopBar
 import com.abir.androidbasicpart1.data.menuItems
 import kotlinx.coroutines.launch
 

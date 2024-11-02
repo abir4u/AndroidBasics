@@ -24,10 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.abir.androidbasicpart1.composables.DialButton
-import com.abir.androidbasicpart1.composables.EmailButton
-import com.abir.androidbasicpart1.composables.ExternalMapButton
-import com.abir.androidbasicpart1.composables.OpenWebsiteButton
+import com.abir.androidbasicpart1.composables.intent.DialButton
+import com.abir.androidbasicpart1.composables.intent.EmailButton
+import com.abir.androidbasicpart1.composables.intent.ExternalMapButton
+import com.abir.androidbasicpart1.composables.intent.OpenWebsiteButton
 
 @Composable
 fun NavigateOutsideAppScreen() {

@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.abir.androidbasicpart1.composables.DataValueField
-import com.abir.androidbasicpart1.composables.ExpandableSection
+import com.abir.androidbasicpart1.composables.common.DataValueField
+import com.abir.androidbasicpart1.composables.common.ExpandableSection
 import com.abir.androidbasicpart1.data.apiDataMap
 import com.abir.androidbasicpart1.viewmodels.UserViewModel
 
