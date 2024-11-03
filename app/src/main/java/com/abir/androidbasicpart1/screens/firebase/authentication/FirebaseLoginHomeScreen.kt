@@ -28,6 +28,9 @@ fun FirebaseLoginHomeScreen(navController: NavHostController) {
         Button(onClick = { navController.navigate(Screen.EmailLogin.route) }) {
             Text("Email address")
         }
+        Button(onClick = { navController.navigate(Screen.PhoneLogin.route) }) {
+            Text("Phone number")
+        }
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Don't have a login?")
         Button(onClick = { navController.navigate(Screen.RegisterHome.route) }) {

@@ -29,8 +29,8 @@ fun FirebaseRegisterHomeScreen(navController: NavHostController) {
             Text("Email address")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { navController.navigate(Screen.EmailRegister.route) }) {
-            Text("TBD")
+        Button(onClick = { navController.navigate(Screen.PhoneRegister.route) }) {
+            Text("Phone number")
         }
     }
 }

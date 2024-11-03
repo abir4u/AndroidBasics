@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -42,8 +43,8 @@ fun FirebaseEmailLoginScreen(navController: NavHostController) {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        status = "Login Successful"
-                        // Navigate to the next screen, e.g., HomeScreen
+                        status = "Login Successful" // Change this to a toast
+                        navController.navigate(Screen.LoginSuccess.route)
                     } else {
                         status = "Login Failed: ${task.exception?.message}"
                     }
