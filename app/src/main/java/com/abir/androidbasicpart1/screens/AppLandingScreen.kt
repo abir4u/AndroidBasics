@@ -35,7 +35,7 @@ fun AppLandingScreen() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(modifier = Modifier.height(16.dp)) //space (margin) from top
+                Spacer(modifier = Modifier.height(16.dp))
                 menuItems.forEachIndexed { index, item ->
                     MenuItem(
                         index = index,
@@ -51,6 +51,7 @@ fun AppLandingScreen() {
                             1 -> route = "api"
                             2 -> route = "outside"
                             3 -> route = "firebase"
+                            4 -> route = "storage"
                         }
                     }
                 }
@@ -71,6 +72,7 @@ fun AppLandingScreen() {
             "api" -> ApiIntegrationScreen()
             "outside" -> NavigateOutsideAppScreen()
             "firebase" -> FirebaseScreen()
+            "storage" -> DataStorageScreen()
         }
     }
 }

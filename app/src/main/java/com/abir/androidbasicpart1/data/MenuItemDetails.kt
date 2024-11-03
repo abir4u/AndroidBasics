@@ -1,9 +1,11 @@
 package com.abir.androidbasicpart1.data
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
@@ -40,6 +42,11 @@ val menuItems = listOf(
     MenuItemDetails(
         title = "Firebase",
         selectedIcon = Icons.Filled.Settings,
+        unselectedIcon = Icons.Outlined.Settings
+    ),
+    MenuItemDetails(
+        title = "Data Storage",
+        selectedIcon = Icons.AutoMirrored.Filled.List,
         unselectedIcon = Icons.Outlined.Settings
     )
 )
