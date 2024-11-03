@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.screens
+package com.abir.androidbasicpart1.screens.firebase.authentication.email
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun FirebaseEmailRegisterScreen(navController: NavHostController) {
+fun FirebaseEmailLoginScreen(navController: NavHostController) {
     val auth = FirebaseAuth.getInstance()
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -39,17 +39,17 @@ fun FirebaseEmailRegisterScreen(navController: NavHostController) {
         TextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            auth.createUserWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
-                    status = if (task.isSuccessful) {
-                        "Registration Successful"
-                        // Navigate to the login or another screen
+                    if (task.isSuccessful) {
+                        status = "Login Successful"
+                        // Navigate to the next screen, e.g., HomeScreen
                     } else {
-                        "Registration Failed: ${task.exception?.message}"
+                        status = "Login Failed: ${task.exception?.message}"
                     }
                 }
         }) {
-            Text("Register")
+            Text("Login")
         }
         Text(status)
     }

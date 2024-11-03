@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.screens
+package com.abir.androidbasicpart1.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DataStorageScreen() {
+fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -19,6 +19,6 @@ fun DataStorageScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Firebase")
+        Text(text = "You are in Home")
     }
 }

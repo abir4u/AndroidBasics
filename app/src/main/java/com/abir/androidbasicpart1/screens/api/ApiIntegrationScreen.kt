@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.screens
+package com.abir.androidbasicpart1.screens.api
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

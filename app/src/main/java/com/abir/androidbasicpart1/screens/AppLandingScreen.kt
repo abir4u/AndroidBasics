@@ -19,6 +19,11 @@ import androidx.compose.runtime.remember
 import com.abir.androidbasicpart1.composables.menu.MenuItem
 import com.abir.androidbasicpart1.composables.menu.MenuTopBar
 import com.abir.androidbasicpart1.data.menuItems
+import com.abir.androidbasicpart1.screens.api.ApiIntegrationScreen
+import com.abir.androidbasicpart1.screens.firebase.FirebaseScreen
+import com.abir.androidbasicpart1.screens.home.HomeScreen
+import com.abir.androidbasicpart1.screens.outsideapp.NavigateOutsideAppScreen
+import com.abir.androidbasicpart1.screens.storage.DataStorageScreen
 import kotlinx.coroutines.launch
 
 @Composable
