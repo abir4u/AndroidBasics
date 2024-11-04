@@ -117,6 +117,8 @@ To use Firebase Authentication, you need to enable the authentication methods yo
 2. Click on the **Sign-in method**.
 3. Choose your authentication method that you wish to configure.
 
+![firebase_auth_page_signin_method.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Ffirebase_auth_page_signin_method.png)
+
 #### Step 7.1: Email/Password
 
 
