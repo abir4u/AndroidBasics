@@ -24,11 +24,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -53,17 +55,32 @@ fun FirebasePhoneLoginScreen(navController: NavHostController) {
         override fun onVerificationCompleted(credential: PhoneAuthCredential) {
             // Automatically verifies if the OTP is correct
             statusMessage = "Verification completed successfully!"
+            Log.d("PhoneAuth", "onVerificationCompleted:$credential")
             signInWithPhoneAuthCredential(auth, credential, navController)
         }
 
         override fun onVerificationFailed(e: FirebaseException) {
             statusMessage = "Verification failed: ${e.message}"
+            Log.w("PhoneAuth", "onVerificationFailed", e)
+
+            if (e is FirebaseAuthInvalidCredentialsException) {
+                // Invalid request
+                statusMessage = "The request is invalid"
+            } else if (e is FirebaseTooManyRequestsException) {
+                // The SMS quota for the project has been exceeded
+                statusMessage = "The SMS quota for the project has been exceeded"
+            } else if (e is FirebaseAuthMissingActivityForRecaptchaException) {
+                // reCAPTCHA verification attempted with null Activity
+                statusMessage = "reCAPTCHA verification attempted with null Activity"
+            }
+
         }
 
         override fun onCodeSent(receivedVerificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
             statusMessage = "Code sent. Please enter the OTP."
             isCodeSent = true
             verificationId = receivedVerificationId
+            Log.d("PhoneAuth", "onCodeSent:$verificationId")
         }
     }
 
