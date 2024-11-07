@@ -39,6 +39,7 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
 
     var phoneNumber by remember { mutableStateOf(TextFieldValue("")) }
     var otpCode by remember { mutableStateOf(TextFieldValue("")) }
+    val phoneError by viewModel.phoneError.observeAsState()
     val statusMessage by viewModel.statusMessage.observeAsState("Enter your phone number")
     val isCodeSent by viewModel.isCodeSent.observeAsState(false)
     val loginStatus by viewModel.loginStatus.observeAsState()
@@ -56,12 +57,22 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
         if (!isCodeSent) {
             TextField(
                 value = phoneNumber,
-                onValueChange = { phoneNumber = it },
+                onValueChange = {
+                    phoneNumber = it
+                    viewModel.validatePhoneNumber(it.text)
+                },
                 label = { Text("Phone Number") },
                 placeholder = { Text("+1234567890") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            if (phoneError != null) {
+                Text(
+                    text = phoneError!!,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
                 if (phoneNumber.text.isNotBlank()) {
