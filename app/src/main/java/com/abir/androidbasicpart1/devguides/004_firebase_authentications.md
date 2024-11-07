@@ -218,6 +218,260 @@ fun FirebaseEmailRegisterScreen(navController: NavHostController) {
 }
 ```
 
+#### Step 3: Implement textfield validations
+There are two textfields here that need validation – `Email` and `Password`
 
+Below is a sample of how it will look. The full code will given in Step 4.
 
+```kotlin
+var emailError by remember { mutableStateOf("") }
+var passwordError by remember { mutableStateOf("") }
 
+// Method to validate email and update the LiveData for errors
+fun validateEmail(email: String) {
+    emailError = when {
+        email.isBlank() -> "Email cannot be empty"
+        !Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-zA-Z]{2,6}$").matches(email) -> "Invalid email format"
+        else -> null
+    }
+}
+
+// Method to validate password and update the LiveData for errors
+fun validatePassword(password: String) {
+    passwordError = when {
+        password.isBlank() -> "Password cannot be empty"
+        password.length < 8 -> "Password must be at least 8 characters"
+        !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$").matches(password) ->
+            "Password must contain uppercase, lowercase, digit, and special character"
+        else -> null
+    }
+}
+```
+
+#### Step 4: Move all business logic into `ViewModel`
+In MVVM, the **ViewModel** should handle business logic, network requests, and data 
+processing, while the Composable should only be responsible for displaying data 
+and handling user interactions.
+
+**Why Move Firebase Authentication and Vaidations to the ViewModel?**
+1. **Separation of Concerns**: The Composable focuses on rendering UI, while the ViewModel handles the authentication logic.
+2. **Reusability**: This makes it easier to reuse and test your authentication logic.
+3. **State Management**: The ViewModel can handle state changes related to authentication, making it easier to observe from the UI.
+
+Below is the full code for email and password authentication.
+##### Part 1: AuthenticationViewModel
+First add dependency for live data in `build.gradle.kts` for the `app`:
+```kotlin
+dependencies {
+    implementation("androidx.compose.runtime:1.7.5")
+}
+```
+
+Then create a `ViewModel`.
+```kotlin
+class AuthenticationViewModel: ViewModel() {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    private val _emailError = MutableLiveData<String?>()
+    val emailError: LiveData<String?> = _emailError
+
+    private val _passwordError = MutableLiveData<String?>()
+    val passwordError: LiveData<String?> = _passwordError
+
+    // LiveData to track login status
+    private val _loginStatus = MutableLiveData<String>()
+    val loginStatus: LiveData<String> = _loginStatus
+    
+    // Method to validate email and update the LiveData for errors
+    fun validateEmail(email: String) {
+        _emailError.value = when {
+            email.isBlank() -> "Email cannot be empty"
+            !Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-zA-Z]{2,6}$").matches(email) -> "Invalid email format"
+            else -> null
+        }
+    }
+
+    // Method to validate password and update the LiveData for errors
+    fun validatePassword(password: String) {
+        _passwordError.value = when {
+            password.isBlank() -> "Password cannot be empty"
+            password.length < 8 -> "Password must be at least 8 characters"
+            !Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}$").matches(password) ->
+                "Password must contain uppercase, lowercase, digit, and special character"
+            else -> null
+        }
+    }
+
+    // Function to handle login
+    fun signInWithEmail(context: Context, email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _loginStatus.value = context.getString(R.string.login_success)
+                } else {
+                    _loginStatus.value = "${context.getString(R.string.login_failed)} ${task.exception?.message}"
+                }
+            }
+    }
+
+    fun registerWithEmail(context: Context, email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _loginStatus.value = context.getString(R.string.registration_success)
+                } else {
+                    _loginStatus.value = "${context.getString(R.string.registration_failed)} ${task.exception?.message}"
+                }
+            }
+    }
+
+    // Reset status after showing to avoid displaying the same message repeatedly
+    fun resetLoginStatus() {
+        _loginStatus.value = ""
+    }
+}
+```
+
+##### Part 2: Expose UI via LiveData and update the Login Composable
+```kotlin
+@Composable
+fun FirebaseEmailLoginScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    val loginStatus by viewModel.loginStatus.observeAsState()
+    val emailError by viewModel.emailError.observeAsState()
+    val passwordError by viewModel.passwordError.observeAsState()
+
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(
+            value = email,
+            onValueChange = {
+                email = it
+                viewModel.validateEmail(it)
+            },
+            label = { Text("Email") },
+            isError = emailError != null,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+        )
+        if (emailError != null) {
+            Text(
+                text = emailError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(
+            value = password,
+            onValueChange =
+            {
+                password = it
+                viewModel.validatePassword(it)
+            },
+            label = { Text("Password") },
+            isError = passwordError != null,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+        )
+        if (passwordError != null) {
+            Text(
+                text = passwordError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { viewModel.signInWithEmail(context, email, password) }) {
+            Text("Login")
+        }
+        // Observe login status and navigate to success screen if successful
+        loginStatus?.let { status ->
+            if (status == stringResource(R.string.login_success)) {
+                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.LoginSuccess.route)
+                viewModel.resetLoginStatus() // Clear status to prevent repeated navigation
+            } else if (status.isNotEmpty()) {
+                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                viewModel.resetLoginStatus() // Clear status after displaying
+            }
+        }
+    }
+}
+```
+##### Part 3: Expose UI via LiveData and update the Registration Composable
+```kotlin
+@Composable
+fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    val loginStatus by viewModel.loginStatus.observeAsState()
+    val emailError by viewModel.emailError.observeAsState()
+    val passwordError by viewModel.passwordError.observeAsState()
+
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(
+            value = email,
+            onValueChange =
+            {
+                email = it
+                viewModel.validateEmail(it)
+            },
+            label = { Text("Email") }
+        )
+        if (emailError != null) {
+            Text(
+                text = emailError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(
+            value = password,
+            onValueChange =
+            {
+                password = it
+                viewModel.validatePassword(it)
+            },
+            label = { Text("Password") }
+        )
+        if (passwordError != null) {
+            Text(
+                text = passwordError!!,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(onClick = { viewModel.registerWithEmail(context, email, password) }) {
+            Text("Register")
+        }
+        // Observe login status and navigate to success screen if successful
+        loginStatus?.let { status ->
+            if (status == stringResource(R.string.registration_success)) {
+                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.LoginSuccess.route)
+                viewModel.resetLoginStatus() // Clear status to prevent repeated navigation
+            } else if (status.isNotEmpty()) {
+                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                viewModel.resetLoginStatus() // Clear status after displaying
+            }
+        }
+    }
+}
+```
