@@ -119,10 +119,105 @@ To use Firebase Authentication, you need to enable the authentication methods yo
 
 ![firebase_auth_page_signin_method.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Ffirebase_auth_page_signin_method.png)
 
-#### Step 7.1: Email/Password
+Set up test data here for:
+1. Email
+2. Phone
+3. Google
+4. Apple
+5. Facebook
+6. Twitter
+7. GitHub
 
+## Set up Android app to handle Firebase authentication
 
-#### Step 7.2: Phone
+### Prerequisites
+
+This is explained in details in Step 5 of Setting up a Firebase project for Android app.
+
+### Email / Password
+
+#### Step 1: Set up Login and Navigation after Login
+We'll ask users to enter their email and password first, then confirm their registration
+or login. Here’s how we can set up the LoginScreen – collect the email and password, then
+use Firebase Authentication to verify the credentials.
+
+```kotlin
+@Composable
+fun FirebaseEmailLoginScreen(navController: NavHostController) {
+    val auth = FirebaseAuth.getInstance()
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        status = "Login Successful" // Change this to a toast
+                        navController.navigate(Screen.LoginSuccess.route)
+                    } else {
+                        status = "Login Failed: ${task.exception?.message}"
+                    }
+                }
+        }) {
+            Text("Login")
+        }
+        Text(status)
+    }
+}
+```
+
+#### Step 2: Set up Registration and Navigation after Registration
+In the RegistrationScreen, take the email and password input and create a new user.
+
+```kotlin
+@Composable
+fun FirebaseEmailRegisterScreen(navController: NavHostController) {
+    val auth = FirebaseAuth.getInstance()
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    status = if (task.isSuccessful) {
+                        "Registration Successful"
+                        // Navigate to the login or another screen
+                    } else {
+                        "Registration Failed: ${task.exception?.message}"
+                    }
+                }
+        }) {
+            Text("Register")
+        }
+        Text(status)
+    }
+}
+```
+
 
 
 
