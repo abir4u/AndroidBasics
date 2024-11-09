@@ -14,14 +14,14 @@ import com.abir.androidbasicpart1.screens.firebase.authentication.phone.Firebase
 import com.abir.androidbasicpart1.screens.firebase.authentication.phone.FirebasePhoneRegisterScreen
 
 sealed class Screen(val route: String) {
-    object FirebaseHome : Screen("firebaseHome")
-    object LoginHome : Screen("loginHome")
-    object RegisterHome : Screen("registerHome")
-    object EmailLogin : Screen("emailLogin")
-    object EmailRegister : Screen("emailRegister")
-    object PhoneLogin : Screen("phoneLogin")
-    object PhoneRegister : Screen("phoneRegister")
-    object LoginSuccess : Screen("loginSuccess")
+    data object FirebaseHome : Screen("firebaseHome")
+    data object LoginHome : Screen("loginHome")
+    data object RegisterHome : Screen("registerHome")
+    data object EmailLogin : Screen("emailLogin")
+    data object EmailRegister : Screen("emailRegister")
+    data object PhoneLogin : Screen("phoneLogin")
+    data object PhoneRegister : Screen("phoneRegister")
+    data object LoginSuccess : Screen("loginSuccess")
 }
 
 @Composable
