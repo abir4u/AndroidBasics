@@ -2,14 +2,22 @@
 
 There are two types of splash screens that need to be created. One that works for
 devices running on Android 12 or later, and the other one for devices on Android 11 
-or earlier.
+or earlier. The one for Android 12 or later will be a built-in splash screen, 
+which uses the consistent, smooth startup experience provided by Android 12  (API 
+level 31) and higher. The second one will be a custom one and we will have to 
+customise a lot more in it. We will create both of these splash screens through 
+this guide.
 
 ## Step 1: Add a logo image
 Place your logo image in the `res/drawable` directory of your project. For example, 
-let's say you have an image named `android_basics_full_screen_logo.png`.
+let's say you have an image named `android_basics_full_screen_logo.png`. This image
+will be used to display the app logo on a custom splash screen that we will create.
 
 ## Step 2: Add a logo image icon
-Right click on `res` and select `New > Image Asset`. Set your icon of choice here.
+This step is not related to Step 1.
+We will now add another version of this logo image for the built-in splash screen.
+Right click on `res` and select `New > Image Asset`. Browser and set your icon of 
+choice here from our local machine.
 
 ![screenshot_configure_image.png](..%2F..%2F..%2F..%2F..%2Fres%2Fdrawable%2Fscreenshot_configure_image.png)
 
