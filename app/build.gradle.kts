@@ -88,4 +88,10 @@ dependencies {
 
     // Jetpack Compose Material3 for UI
     implementation(libs.material3)
+
+    // Preferences DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // Proto DataStore (only add if you use Proto-based DataStore)
+    implementation(libs.androidx.datastore)
 }
