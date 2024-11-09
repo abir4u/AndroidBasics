@@ -82,9 +82,10 @@ dependencies {
     //Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Firebase Authentication dependency
-    implementation(libs.firebase.bom)
+    // Firebase Authentication dependencies
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth) // Google authentication services
 
     // Jetpack Compose Material3 for UI
     implementation(libs.material3)
