@@ -8,5 +8,6 @@
     </style>
     <style name="SplashTheme" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/app_logo_background</item>
+        <item name="android:windowNoTitle">true</item> <!-- Hide title bar -->
     </style>
 </resources>
