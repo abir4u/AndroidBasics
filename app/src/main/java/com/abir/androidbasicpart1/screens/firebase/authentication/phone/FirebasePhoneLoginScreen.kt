@@ -24,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
+import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
 
@@ -37,8 +39,8 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
 
-    var phoneNumber by remember { mutableStateOf(TextFieldValue("")) }
-    var otpCode by remember { mutableStateOf(TextFieldValue("")) }
+    var phoneNumber by remember { mutableStateOf("") }
+    var otpCode by remember { mutableStateOf("") }
     val phoneError by viewModel.phoneError.observeAsState()
     val statusMessage by viewModel.statusMessage.observeAsState("Enter your phone number")
     val isCodeSent by viewModel.isCodeSent.observeAsState(false)
@@ -55,28 +57,22 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
         Spacer(modifier = Modifier.height(16.dp))
 
         if (!isCodeSent) {
-            TextField(
+            BasicTextField(
                 value = phoneNumber,
                 onValueChange = {
                     phoneNumber = it
-                    viewModel.validatePhoneNumber(it.text)
+                    viewModel.validatePhoneNumber(it)
                 },
-                label = { Text("Phone Number") },
-                placeholder = { Text("+1234567890") },
+                labelText = "Phone Number",
+                errorText = phoneError,
+                placeholderText = "+1234567890",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
-            if (phoneError != null) {
-                Text(
-                    text = phoneError!!,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(onClick = {
-                if (phoneNumber.text.isNotBlank()) {
-                    viewModel.startPhoneNumberVerification(activity, phoneNumber.text)
+                if (phoneNumber.isNotBlank()) {
+                    viewModel.startPhoneNumberVerification(activity, phoneNumber)
                 } else {
                     viewModel.updateStatusMessage("Please enter a valid phone number.")
                 }
@@ -84,16 +80,17 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
                 Text("Send OTP")
             }
         } else {
-            TextField(
+            BasicTextField(
                 value = otpCode,
                 onValueChange = { otpCode = it },
-                label = { Text("Enter OTP") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                labelText = "Enter OTP",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                visualTransformation = PasswordVisualTransformation()
             )
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(onClick = {
-                viewModel.validatePhoneSignInCriteria(context, otpCode.text)
+                viewModel.validatePhoneSignInCriteria(context, otpCode)
             }) {
                 Text("Verify OTP")
             }

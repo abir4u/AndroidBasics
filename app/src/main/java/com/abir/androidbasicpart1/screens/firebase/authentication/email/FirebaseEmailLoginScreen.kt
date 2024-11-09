@@ -23,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
+import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
 
@@ -35,8 +37,6 @@ fun FirebaseEmailLoginScreen(navController: NavHostController, viewModel: Authen
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val loginStatus by viewModel.loginStatus.observeAsState()
-    val emailError by viewModel.emailError.observeAsState()
-    val passwordError by viewModel.passwordError.observeAsState()
 
     val context = LocalContext.current
 
@@ -47,42 +47,25 @@ fun FirebaseEmailLoginScreen(navController: NavHostController, viewModel: Authen
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextField(
+        BasicTextField(
             value = email,
             onValueChange = {
                 email = it
-                viewModel.validateEmail(it)
             },
-            label = { Text("Email") },
-            isError = emailError != null,
+            labelText = "Email",
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
-        if (emailError != null) {
-            Text(
-                text = emailError!!,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
+        BasicTextField(
             value = password,
             onValueChange =
             {
                 password = it
-                viewModel.validatePassword(it)
             },
-            label = { Text("Password") },
-            isError = passwordError != null,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            labelText = "Password",
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
         )
-        if (passwordError != null) {
-            Text(
-                text = passwordError!!,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { viewModel.signInWithEmail(context, email, password) }) {
             Text("Login")

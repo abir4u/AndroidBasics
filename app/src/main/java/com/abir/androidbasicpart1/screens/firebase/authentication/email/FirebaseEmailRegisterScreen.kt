@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,10 +22,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
+import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
 
@@ -45,39 +49,30 @@ fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: Aut
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextField(
+        BasicTextField(
             value = email,
             onValueChange =
             {
                 email = it
                 viewModel.validateEmail(it)
             },
-            label = { Text("Email") }
+            labelText = "Email",
+            errorText = emailError,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
-        if (emailError != null) {
-            Text(
-                text = emailError!!,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
+        BasicTextField(
             value = password,
             onValueChange =
             {
                 password = it
                 viewModel.validatePassword(it)
             },
-            label = { Text("Password") }
+            labelText = "Password",
+            errorText = passwordError,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
         )
-        if (passwordError != null) {
-            Text(
-                text = passwordError!!,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = { viewModel.registerWithEmail(context, email, password) }) {
             Text("Register")
