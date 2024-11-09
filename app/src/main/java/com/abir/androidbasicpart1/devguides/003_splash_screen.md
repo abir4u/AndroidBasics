@@ -21,18 +21,23 @@ In `AndroidManifest.xml`, modify the following attributes in `<application>`:
 </application>
 ```
 
-## Step 3: Update `theme.xml`
+## Step 3: Update `theme.xml` and define Custom Splash Screen Theme
 
 **Locate your theme file:** Open `res/values/themes.xml` (or `res/values/styles.xml` 
 depending on your project structure).
 
-**Modify your app theme:** Set the window background color to be transparent, so that 
-the default splash screen does not show. Here’s how you can do that:
+**Modify your app splash screen theme:** Set the window background color to be your 
+desired color, and hide the title bar of the device.
+
+If you want to customize the splash screen experience further while still managing 
+the default splash screen, you can define a custom theme for your splash screen.
+
+Add a new theme in `res/values/themes.xml` within `<resources>`:
 
 ```xml
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/transparent</item> <!-- Make background transparent -->
+    <style name="SplashTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background</item> <!-- Set your splash background color -->
         <item name="android:windowNoTitle">true</item> <!-- Hide title bar -->
     </style>
 </resources>
@@ -40,37 +45,10 @@ the default splash screen does not show. Here’s how you can do that:
 
 ## Step 4: Disable Default Splash Screen in `AndroidManifest.xml`
 
-Open `AndroidManifest.xml`.
-
-In your `<activity>` tag, add the following attribute to disable the default splash 
-screen behavior:
-
-```xml
-<activity
-    android:name=".MainActivity"
-    android:theme="@style/AppTheme">
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-</activity>
-```
-
-## Step 5: Define Custom Splash Screen Theme
-
-If you want to customize the splash screen experience further while still managing the default splash screen, you can define a custom theme for your splash screen.
-
-Create a new theme in `res/values/themes.xml`:
-
-```xml
-<resources>
-    <style name="SplashTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@color/splash_background</item> <!-- Set your splash background color -->
-    </style>
-</resources>
-```
-
 Update the `MainActivity` to use the `SplashTheme`:
+
+In your `<activity>` tag, add the following attribute to disable the default splash
+screen behavior:
 
 ```xml
 <activity
@@ -83,7 +61,7 @@ Update the `MainActivity` to use the `SplashTheme`:
 </activity>
 ```
 
-## Step 6: Create Splash Screen Composable
+## Step 5: Create Splash Screen Composable
 Below is an example of a splash screen using Jetpack Compose.
 
 ```kotlin
@@ -139,7 +117,7 @@ fun SplashScreen() {
 }
 ```
 
-## Step 7: Display the Splash Screen for different devices
+## Step 6: Display the Splash Screen for different devices
 To show this splash screen when the app launches, you can call the `SplashScreen()` 
 composable from your main activity. But since Android 12 or later devices will
 already show a default splash screen, so we will need to remove that as well. This
