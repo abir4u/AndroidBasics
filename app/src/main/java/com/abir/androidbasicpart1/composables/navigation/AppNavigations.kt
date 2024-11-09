@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.abir.androidbasicpart1.screens.firebase.LoginSuccessScreen
+import com.abir.androidbasicpart1.screens.firebase.authentication.FirebaseHomeScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.FirebaseLoginHomeScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.email.FirebaseEmailLoginScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.email.FirebaseEmailRegisterScreen
@@ -13,6 +14,7 @@ import com.abir.androidbasicpart1.screens.firebase.authentication.phone.Firebase
 import com.abir.androidbasicpart1.screens.firebase.authentication.phone.FirebasePhoneRegisterScreen
 
 sealed class Screen(val route: String) {
+    object FirebaseHome : Screen("firebaseHome")
     object LoginHome : Screen("loginHome")
     object RegisterHome : Screen("registerHome")
     object EmailLogin : Screen("emailLogin")
@@ -25,13 +27,14 @@ sealed class Screen(val route: String) {
 @Composable
 fun FirebaseNavigations() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.LoginHome.route) {
+    NavHost(navController = navController, startDestination = Screen.FirebaseHome.route) {
+        composable(Screen.FirebaseHome.route) { FirebaseHomeScreen(navController) }
         composable(Screen.LoginHome.route) { FirebaseLoginHomeScreen(navController) }
         composable(Screen.RegisterHome.route) { FirebaseRegisterHomeScreen(navController) }
         composable(Screen.EmailLogin.route) { FirebaseEmailLoginScreen(navController) }
         composable(Screen.EmailRegister.route) { FirebaseEmailRegisterScreen(navController) }
         composable(Screen.PhoneLogin.route) { FirebasePhoneLoginScreen(navController) }
         composable(Screen.PhoneRegister.route) { FirebasePhoneRegisterScreen(navController) }
-        composable(Screen.LoginSuccess.route) { LoginSuccessScreen() }
+        composable(Screen.LoginSuccess.route) { LoginSuccessScreen(navController) }
     }
 }
