@@ -6,11 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.abir.androidbasicpart1.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -46,8 +51,6 @@ class AuthenticationViewModel: ViewModel() {
     fun updateStatusMessage(message: String) {
         _statusMessage.value = message
     }
-
-
 
     // Method to validate email and update the LiveData for errors
     fun validateEmail(email: String) {
@@ -159,6 +162,30 @@ class AuthenticationViewModel: ViewModel() {
         } else {
             updateStatusMessage("Verification ID is missing.")
         }
+    }
+
+    // Get GoogleSignInClient
+    fun getGoogleSignInClient(context: Context): GoogleSignInClient {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        return GoogleSignIn.getClient(context, gso)
+    }
+
+    // Authenticate with Firebase using Google account
+    fun signInWithGoogle(context: Context, account: GoogleSignInAccount, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _loginStatus.value = context.getString(R.string.login_success)
+                    onSuccess()
+                } else {
+                    _loginStatus.value = context.getString(R.string.login_failed)
+                    onFailure(task.exception?.message ?: "Google Sign-In failed.")
+                }
+            }
     }
 
     // Reset status after showing to avoid displaying the same message repeatedly
