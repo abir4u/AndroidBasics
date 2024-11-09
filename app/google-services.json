@@ -12,7 +12,20 @@
           "package_name": "com.abir.androidbasicpart1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "95157934256-ddns667b5h4iivo6id9no6j2p9hl7e1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abir.androidbasicpart1",
+            "certificate_hash": "19446cceadab22c75197c9a371453b70b1487f5b"
+          }
+        },
+        {
+          "client_id": "95157934256-ouidvi8q53hihfbhogmc6do4ec7fupj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUUyDBNia83FwV1LkTMPdLE2KYnazARU0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95157934256-ouidvi8q53hihfbhogmc6do4ec7fupj2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
