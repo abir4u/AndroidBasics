@@ -31,5 +31,8 @@ fun FirebaseRegisterHomeScreen(navController: NavHostController) {
         Button(onClick = { navController.navigate(Screen.PhoneRegister.route) }) {
             Text("Phone number")
         }
+        Button(onClick = { navController.navigate(Screen.GoogleRegister.route) }) {
+            Text("Google")
+        }
     }
 }

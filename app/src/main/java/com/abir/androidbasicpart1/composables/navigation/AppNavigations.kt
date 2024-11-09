@@ -10,6 +10,8 @@ import com.abir.androidbasicpart1.screens.firebase.authentication.FirebaseLoginH
 import com.abir.androidbasicpart1.screens.firebase.authentication.email.FirebaseEmailLoginScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.email.FirebaseEmailRegisterScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.FirebaseRegisterHomeScreen
+import com.abir.androidbasicpart1.screens.firebase.authentication.google.FirebaseGoogleLoginScreen
+import com.abir.androidbasicpart1.screens.firebase.authentication.google.FirebaseGoogleRegisterScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.phone.FirebasePhoneLoginScreen
 import com.abir.androidbasicpart1.screens.firebase.authentication.phone.FirebasePhoneRegisterScreen
 
@@ -21,6 +23,8 @@ sealed class Screen(val route: String) {
     data object EmailRegister : Screen("emailRegister")
     data object PhoneLogin : Screen("phoneLogin")
     data object PhoneRegister : Screen("phoneRegister")
+    data object GoogleLogin : Screen("googleLogin")
+    data object GoogleRegister : Screen("googleRegister")
     data object LoginSuccess : Screen("loginSuccess")
 }
 
@@ -35,6 +39,8 @@ fun FirebaseNavigations() {
         composable(Screen.EmailRegister.route) { FirebaseEmailRegisterScreen(navController) }
         composable(Screen.PhoneLogin.route) { FirebasePhoneLoginScreen(navController) }
         composable(Screen.PhoneRegister.route) { FirebasePhoneRegisterScreen(navController) }
+        composable(Screen.GoogleLogin.route) { FirebaseGoogleLoginScreen(navController) }
+        composable(Screen.GoogleRegister.route) { FirebaseGoogleRegisterScreen(navController) }
         composable(Screen.LoginSuccess.route) { LoginSuccessScreen(navController) }
     }
 }
