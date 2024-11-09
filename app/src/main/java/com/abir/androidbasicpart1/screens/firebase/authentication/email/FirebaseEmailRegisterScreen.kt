@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +29,9 @@ import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
+import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
 import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
@@ -39,6 +42,7 @@ fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: Aut
     val passwordError by viewModel.passwordError.observeAsState()
 
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -79,9 +83,12 @@ fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: Aut
         // Observe login status and navigate to success screen if successful
         loginStatus?.let { status ->
             if (status == stringResource(R.string.registration_success)) {
-                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
-                navController.navigate(Screen.LoginSuccess.route)
-                viewModel.resetLoginStatus() // Clear status to prevent repeated navigation
+                coroutineScope.launch {
+                    saveLoginState(context = context, true, email)
+                    Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.LoginSuccess.route)
+                    viewModel.resetLoginStatus() // Clear status to prevent repeated navigation
+                }
             } else if (status.isNotEmpty()) {
                 Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
                 viewModel.resetLoginStatus() // Clear status after displaying
