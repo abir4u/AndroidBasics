@@ -13,11 +13,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,17 +28,15 @@ import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.google.android.gms.common.api.ApiException
 import com.abir.androidbasicpart1.viewmodels.authentication.GoogleAuthViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun FirebaseGoogleRegisterScreen(navController: NavHostController, viewModel: GoogleAuthViewModel = viewModel()) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
     val statusMessage by remember { mutableStateOf("Register with your Google account") }
     val loginStatus by viewModel.loginStatus.observeAsState()
     val email by viewModel.email.observeAsState()
+    val error by viewModel.error.observeAsState()
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -62,12 +60,14 @@ fun FirebaseGoogleRegisterScreen(navController: NavHostController, viewModel: Go
         }
     }
     if (loginStatus == stringResource(R.string.login_success)) {
-        coroutineScope.launch {
+        LaunchedEffect(key1 = loginStatus) {
             saveLoginState(context = context, true, email.toString())
             Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show()
             navController.navigate(Screen.LoginSuccess.route)
         }
-    } else {
-        Toast.makeText(context, "Google Login failed", Toast.LENGTH_SHORT).show()
+    } else if (!error.isNullOrBlank()) {
+        LaunchedEffect(key1 = error) {
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
     }
 }
