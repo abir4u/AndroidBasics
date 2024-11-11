@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -32,8 +30,7 @@ import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
-import kotlinx.coroutines.coroutineScope
+import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
 import kotlinx.coroutines.launch
 
 @Composable

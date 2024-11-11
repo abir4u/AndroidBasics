@@ -1,6 +1,5 @@
 package com.abir.androidbasicpart1.screens.firebase.authentication
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.composables.navigation.Screen
-import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
+import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
 
 @Composable
 fun FirebaseLoginHomeScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {

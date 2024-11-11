@@ -14,52 +14,36 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.abir.androidbasicpart1.viewmodels.authentication.GoogleAuthViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun FirebaseGoogleRegisterScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+fun FirebaseGoogleRegisterScreen(navController: NavHostController, viewModel: GoogleAuthViewModel = viewModel()) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val statusMessage by remember { mutableStateOf("Register with your Google account") }
+    val loginStatus by viewModel.loginStatus.observeAsState()
+    val email by viewModel.email.observeAsState()
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
         onResult = { result ->
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                if (account != null) {
-                    viewModel.signInWithGoogle(context, account,
-                        onSuccess = {
-                            coroutineScope.launch {
-                                saveLoginState(context = context, true, account.email.toString())
-                                Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show()
-                                navController.navigate(Screen.LoginSuccess.route)
-                            }
-                        },
-                        onFailure = { errorMessage ->
-                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                }
-            } catch (e: ApiException) {
-                Toast.makeText(context, "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+            viewModel.performAuthentication(context, result.data)
         }
     )
 
@@ -76,5 +60,14 @@ fun FirebaseGoogleRegisterScreen(navController: NavHostController, viewModel: Au
         Button(onClick = { launcher.launch(viewModel.getGoogleSignInClient(context).signInIntent) }) {
             Text("Register with Google")
         }
+    }
+    if (loginStatus == stringResource(R.string.login_success)) {
+        coroutineScope.launch {
+            saveLoginState(context = context, true, email.toString())
+            Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show()
+            navController.navigate(Screen.LoginSuccess.route)
+        }
+    } else {
+        Toast.makeText(context, "Google Login failed", Toast.LENGTH_SHORT).show()
     }
 }

@@ -30,7 +30,7 @@ import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.abir.androidbasicpart1.viewmodels.AuthenticationViewModel
+import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
 import kotlinx.coroutines.launch
 
 @Composable
