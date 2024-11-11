@@ -13,11 +13,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,13 +33,11 @@ import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
 import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
-    val coroutineScope = rememberCoroutineScope()
 
     var phoneNumber by remember { mutableStateOf("") }
     var otpCode by remember { mutableStateOf("") }
@@ -101,15 +99,17 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: Authen
         // Observe login status and navigate to success screen if successful
         loginStatus?.let { status ->
             if (status == stringResource(R.string.login_success)) {
-                coroutineScope.launch {
+                LaunchedEffect(key1 = status) {
                     saveLoginState(context = context, true, phoneNumber)
                     Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
                     navController.navigate(Screen.LoginSuccess.route)
                     viewModel.resetLoginStatus() // Clear status to prevent repeated navigation
                 }
             } else if (status.isNotEmpty()) {
-                Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
-                viewModel.resetLoginStatus() // Clear status after displaying
+                LaunchedEffect(key1 = status) {
+                    Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+                    viewModel.resetLoginStatus() // Clear status after displaying
+                }
             }
         }
     }
