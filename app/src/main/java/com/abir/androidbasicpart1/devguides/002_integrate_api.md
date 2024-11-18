@@ -221,14 +221,14 @@ add the `Compose ViewModel` lifecycle dependencies as well.
 
 ```kotlin
 // Retrofit for network calls
-implementation(libs.retrofit)
-implementation(libs.converter.gson)
+implementation("com.squareup.retrofit2:retrofit:2.9.0")
+implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 // Coroutines for background processing
-implementation(libs.kotlinx.coroutines.android)
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
 
 //Lifecycle
-implementation(libs.androidx.lifecycle.viewmodel.compose)
+implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 ```
 
 ### Step 2: Set up the Retrofit Service
