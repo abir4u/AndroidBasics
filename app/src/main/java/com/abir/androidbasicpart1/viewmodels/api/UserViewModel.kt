@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.viewmodels
+package com.abir.androidbasicpart1.viewmodels.api
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf

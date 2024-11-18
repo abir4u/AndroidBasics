@@ -30,10 +30,10 @@ import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
+import com.abir.androidbasicpart1.viewmodels.authentication.EmailAuthViewModel
 
 @Composable
-fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+fun FirebaseEmailRegisterScreen(navController: NavHostController, viewModel: EmailAuthViewModel = viewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val loginStatus by viewModel.loginStatus.observeAsState()

@@ -32,10 +32,10 @@ import com.abir.androidbasicpart1.R
 import com.abir.androidbasicpart1.composables.common.BasicTextField
 import com.abir.androidbasicpart1.composables.navigation.Screen
 import com.abir.androidbasicpart1.localstorage.dataStore.saveLoginState
-import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
+import com.abir.androidbasicpart1.viewmodels.authentication.PhoneAuthViewModel
 
 @Composable
-fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: PhoneAuthViewModel = viewModel()) {
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
 

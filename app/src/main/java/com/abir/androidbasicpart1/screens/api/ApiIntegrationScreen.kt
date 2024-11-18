@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abir.androidbasicpart1.composables.common.DataValueField
 import com.abir.androidbasicpart1.composables.common.ExpandableSection
 import com.abir.androidbasicpart1.data.apiDataMap
-import com.abir.androidbasicpart1.viewmodels.UserViewModel
+import com.abir.androidbasicpart1.viewmodels.api.UserViewModel
 
 @Composable
 fun ApiIntegrationScreen(userViewModel: UserViewModel = viewModel()) {

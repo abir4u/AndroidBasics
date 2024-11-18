@@ -12,13 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abir.androidbasicpart1.composables.navigation.Screen
-import com.abir.androidbasicpart1.viewmodels.authentication.AuthenticationViewModel
 
 @Composable
-fun FirebaseLoginHomeScreen(navController: NavHostController, viewModel: AuthenticationViewModel = viewModel()) {
+fun FirebaseLoginHomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
