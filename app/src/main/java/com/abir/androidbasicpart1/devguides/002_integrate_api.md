@@ -568,6 +568,32 @@ network calls:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
+
+### Step 6: Create `res/xml/network_security_config.xml`
+
+Define a custom security configuration to allow cleartext traffic for your 
+development server (10.0.2.2):
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Allow cleartext traffic for your local server IP address -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>
+```
+
+Update the `AndroidManifest.xml`:
+Add a `<network-security-config>` to allow cleartext communication to `10.0.2.2`.
+```xml
+<application
+    android:networkSecurityConfig="@xml/network_security_config"
+    android:usesCleartextTraffic="true">
+    ...
+</application>
+```
+
 **NOTES:**
 **Testing Locally:** Since your server is running locally (`127.0.0.1`), the Android 
 emulator will treat this IP as the device itself. To connect to the local server 
