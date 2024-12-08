@@ -2,14 +2,16 @@ package com.abir.androidbasicpart1.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -47,6 +49,11 @@ val menuItems = listOf(
     MenuItemDetails(
         title = "Data Storage",
         selectedIcon = Icons.AutoMirrored.Filled.List,
-        unselectedIcon = Icons.Outlined.Settings
+        unselectedIcon = Icons.AutoMirrored.Outlined.List
+    ),
+    MenuItemDetails(
+        title = "Ads",
+        selectedIcon = Icons.Filled.Notifications,
+        unselectedIcon = Icons.Outlined.Notifications
     )
 )
