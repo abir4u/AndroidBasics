@@ -95,4 +95,7 @@ dependencies {
 
     // Proto DataStore (only add if you use Proto-based DataStore)
     implementation(libs.androidx.datastore)
+
+    // Google AdSense integration
+    implementation(libs.play.services.ads)
 }
