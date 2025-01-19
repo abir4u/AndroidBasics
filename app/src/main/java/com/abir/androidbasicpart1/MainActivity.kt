@@ -13,8 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.abir.androidbasicpart1.screens.SplashScreen
-import com.abir.androidbasicpart1.screens.AppLandingScreen
+import com.abir.androidbasicpart1.presentationlayer.screens.SplashScreen
+import com.abir.androidbasicpart1.presentationlayer.screens.AppLandingScreen
 import com.abir.androidbasicpart1.ui.theme.AndroidBasicPart1Theme
 import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.delay
