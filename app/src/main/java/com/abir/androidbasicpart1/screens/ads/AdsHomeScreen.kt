@@ -12,9 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.abir.androidbasicpart1.composables.ads.BannerAdView
 
 @Composable
 fun AdsHomeScreen() {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -22,5 +25,6 @@ fun AdsHomeScreen() {
     ) {
         Text("Welcome to Ads page", style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(16.dp))
+        BannerAdView(context, "your-banner-ad-unit-id")
     }
 }

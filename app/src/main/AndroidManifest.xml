@@ -28,7 +28,9 @@
         </activity>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5645740422697538~7463349247" />
+            android:value="ca-app-pub-7484764365445774~5290277740" />
+        <!-- qa4slog: ca-app-pub-5645740422697538~7463349247 -->
+        <!-- jenniferzsc: ca-app-pub-7484764365445774~5290277740 -->
     </application>
     <queries>
         <!-- If you need to check if Google Maps is installed -->
