@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.abir.androidbasicpart1"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.abir.androidbasicpart1"
