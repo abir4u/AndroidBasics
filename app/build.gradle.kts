@@ -89,6 +89,7 @@ dependencies {
 
     // Jetpack Compose Material3 for UI
     implementation(libs.material3)
+    implementation(libs.androidx.material)
 
     // Preferences DataStore
     implementation(libs.androidx.datastore.preferences)
@@ -98,4 +99,9 @@ dependencies {
 
     // Google AdSense integration
     implementation(libs.play.services.ads)
+
+    // Room database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+
 }
