@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
-import com.abir.androidbasicpart1.presentationlayer.composables.navigation.Screen
+import com.abir.androidbasicpart1.presentationlayer.navigation.menu.Screen
 import com.abir.androidbasicpart1.datalayer.localStorage.dataStore.saveLoginState
 import kotlinx.coroutines.launch
 

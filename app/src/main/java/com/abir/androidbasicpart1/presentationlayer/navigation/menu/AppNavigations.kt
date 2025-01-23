@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.presentationlayer.composables.navigation
+package com.abir.androidbasicpart1.presentationlayer.navigation.menu
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
