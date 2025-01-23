@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    // Kotlin Annotation Processing Tool Plugin
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.androidx.room)
 
 }
 
@@ -50,6 +51,9 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -103,5 +107,7 @@ dependencies {
     // Room database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-
+    ksp(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 }
