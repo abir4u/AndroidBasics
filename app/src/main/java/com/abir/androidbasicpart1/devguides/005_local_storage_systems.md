@@ -206,3 +206,95 @@ fun AppNavigations() {
     }
 }
 ```
+
+## 2. Room Database
+
+**Purpose:** Storing structured, relational data. Ideal for offline data caching
+and complex data structures.
+**Overview:** `Room`, is the recommended SQLite-based database for Android. It’s 
+type-safe, SQL-based, and offers compile-time checks.
+**Advantages:**
+* With LiveData or Flow, Room data can be observed, making it great for Jetpack Compose, where UI elements can respond to data changes.
+* Room provides DAOs (Data Access Objects) that allow you to define SQL queries and interact with the database using Kotlin.
+
+### Preconditions:
+Kotlin 2.0.0 is the minimum requirement for the room DB dependencies used in this
+documentation.
+**`libs.version.toml`**
+```toml
+kotlin = "2.0.0"
+
+[plugins]
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+```
+**`build.gradle.kts` for project**
+```kotlin
+plugins {
+    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+}
+```
+**`build.gradle.kts` for module**
+```kotlin
+plugins {
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlin.compose)
+}
+```
+
+### Step 1: Add dependencies
+The best way to add dependencies is to follow [Compose Room](https://developer.android.com/jetpack/androidx/releases/room) documentation.
+
+Below is what is added in this project:
+**`libs.version.toml`**
+```toml
+navigationCompose = "2.8.5"
+roomCompiler = "2.6.1"
+runtimeLivedata = "1.7.6"
+roomRuntime = "2.6.1"
+kotlinKsp = "2.0.21-1.0.27"
+roomRuntime = "2.6.1"
+kotlinKsp = "2.0.21-1.0.27"
+
+[libraries]
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+
+[plugins]
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
+androidx-room = { id = "androidx.room", version.ref = "roomRuntime" }
+```
+**`build.gradle.kts` for project**
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.ksp) apply false
+    alias(libs.plugins.androidx.room) apply false
+}
+```
+**`build.gradle.kts` for module**
+```kotlin
+plugins {
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.androidx.room)
+}
+
+android {
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+}
+```
+
