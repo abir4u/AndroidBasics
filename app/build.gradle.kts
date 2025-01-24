@@ -110,4 +110,9 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
+    // Lint
+    implementation(libs.androidx.runtime)
+    implementation(libs.ui)
+
 }

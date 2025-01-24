@@ -1,7 +1,7 @@
 package com.abir.androidbasicpart1.presentationlayer.screens.firebase.authentication.phone
 
-import android.app.Activity
 import android.widget.Toast
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +37,7 @@ import com.abir.androidbasicpart1.businesslayer.viewmodels.authentication.PhoneA
 @Composable
 fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: PhoneAuthViewModel = viewModel()) {
     val context = LocalContext.current
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current // Updated to use LocalActivity
 
     var phoneNumber by remember { mutableStateOf("") }
     var otpCode by remember { mutableStateOf("") }
@@ -72,7 +72,9 @@ fun FirebasePhoneLoginScreen(navController: NavHostController, viewModel: PhoneA
 
             Button(onClick = {
                 if (phoneNumber.isNotBlank()) {
-                    viewModel.startPhoneNumberVerification(activity, phoneNumber)
+                    if (activity != null) {
+                        viewModel.startPhoneNumberVerification(activity, phoneNumber)
+                    }
                 } else {
                     viewModel.updateStatusMessage("Please enter a valid phone number.")
                 }
