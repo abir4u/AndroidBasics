@@ -298,3 +298,83 @@ dependencies {
 }
 ```
 
+### Step 2: Data Model
+Create a data model to pass around all the information of a unit item, which we
+are trying to CRUD (Create, Read, Update and Delete).
+**`WalletItem`**
+```kotlin
+@Entity(tableName = "wallet_items")
+data class WalletItem(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+    val type: String,
+    val balance: String,
+    val description: String
+)
+```
+
+### Step 3: Database Set up
+Set up Room to persist wallet data.
+**DAO (Data Access Object) `WalletDao`**
+```kotlin
+@Dao
+interface WalletDao {
+    @Query("SELECT * FROM wallet_items")
+    fun getAllItems(): Flow<List<WalletItem>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(walletItem: WalletItem)
+
+    @Delete
+    suspend fun deleteItem(walletItem: WalletItem)
+}
+```
+**Database `WalletDatabase`**
+```kotlin
+@Database(entities = [WalletItem::class], version = 1, exportSchema = false)
+abstract class WalletDatabase : RoomDatabase() {
+    abstract fun walletDao(): WalletDao
+
+    companion object {
+        @Volatile private var INSTANCE: WalletDatabase? = null
+
+        fun getDatabase(context: Context): WalletDatabase {
+            return INSTANCE ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    WalletDatabase::class.java,
+                    "wallet_database"
+                ).build().also { INSTANCE = it }
+            }
+        }
+    }
+}
+```
+
+### Step 4: Repository and View Model
+Use a repository for data handling and a ViewModel for managing state.
+**Repository `WalletRepository`**
+```kotlin
+class WalletRepository(private val dao: WalletDao) {
+    val allItems: Flow<List<WalletItem>> = dao.getAllItems()
+
+    suspend fun insertItem(walletItem: WalletItem) = dao.insertItem(walletItem)
+    suspend fun deleteItem(walletItem: WalletItem) = dao.deleteItem(walletItem)
+}
+```
+**View Model `WalletViewModel`**
+```kotlin
+class WalletViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: WalletRepository
+    val allItems: LiveData<List<WalletItem>>
+
+    init {
+        val dao = WalletDatabase.getDatabase(application).walletDao()
+        repository = WalletRepository(dao)
+        allItems = repository.allItems.asLiveData()
+    }
+
+    fun addItem(item: WalletItem) = viewModelScope.launch { repository.insertItem(item) }
+    fun deleteItem(item: WalletItem) = viewModelScope.launch { repository.deleteItem(item) }
+}
+```
