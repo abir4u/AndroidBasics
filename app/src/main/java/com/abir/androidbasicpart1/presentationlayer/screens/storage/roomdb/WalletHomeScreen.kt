@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.presentationlayer.screens.storage
+package com.abir.androidbasicpart1.presentationlayer.screens.storage.roomdb
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.abir.androidbasicpart1.presentationlayer.navigation.menu.Screen
 
 @Composable
-fun DataStorageScreen(navController: NavController) {
+fun WalletHomeScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,27 +25,36 @@ fun DataStorageScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            "Data storage implementation",
+            "Wallet Home",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(16.dp)
         )
 
         Button(
-            onClick = { /* Create and Navigate to Shared Preference screen */ },
+            onClick = { navController.navigate(Screen.WalletList.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text("Shared Preference")
+            Text("View Wallet Items")
         }
 
         Button(
-            onClick = { navController.navigate(Screen.RoomDb.route) },
+            onClick = { navController.navigate(Screen.AddWalletItem.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text("Room DB")
+            Text("Add New Wallet Item")
+        }
+
+        Button(
+            onClick = { /* Optional: Add navigation for Settings or Help */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Text("Settings / Help (Optional)")
         }
     }
 }

@@ -19,12 +19,12 @@ import androidx.compose.runtime.remember
 import com.abir.androidbasicpart1.presentationlayer.composables.menu.MenuItem
 import com.abir.androidbasicpart1.presentationlayer.composables.menu.MenuTopBar
 import com.abir.androidbasicpart1.datalayer.staticData.menuItems
+import com.abir.androidbasicpart1.presentationlayer.navigation.menu.FirebaseScreensStack
+import com.abir.androidbasicpart1.presentationlayer.navigation.menu.StorageScreensStack
 import com.abir.androidbasicpart1.presentationlayer.screens.ads.AdsHomeScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.api.ApiIntegrationScreen
-import com.abir.androidbasicpart1.presentationlayer.screens.firebase.FirebaseScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.home.HomeScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.outsideapp.NavigateOutsideAppScreen
-import com.abir.androidbasicpart1.presentationlayer.screens.storage.DataStorageScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -78,8 +78,8 @@ fun AppLandingScreen() {
             "home" -> HomeScreen()
             "api" -> ApiIntegrationScreen()
             "outside" -> NavigateOutsideAppScreen()
-            "firebase" -> FirebaseScreen()
-            "storage" -> DataStorageScreen()
+            "firebase" -> FirebaseScreensStack()
+            "storage" -> StorageScreensStack()
             "ads" -> AdsHomeScreen()
         }
     }
