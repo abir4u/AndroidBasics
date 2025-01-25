@@ -79,27 +79,12 @@ fun WalletScreensStack(viewModel: WalletViewModel = viewModel()) {
 
     NavHost(navController = walletNavController, startDestination = Screen.WalletHome.route) {
         composable(Screen.WalletHome.route) { WalletHomeScreen(walletNavController) }
-        composable(Screen.WalletList.route) {
-            WalletList(
-                walletItems,
-                onClick = { item ->
-                    walletNavController.navigate("wallet_detail/${item.id}")
-                },
-                onDelete = { item ->
-                    viewModel.deleteItem(item)
-                }
-            )
-        }
+        composable(Screen.WalletList.route) { WalletList(walletItems, walletNavController, viewModel) }
         composable(Screen.WalletDetails.route) { backStackEntry ->
             val itemId = backStackEntry.arguments?.getString("itemId")?.toIntOrNull()
             val item = walletItems.find { it.id == itemId }
             if (item != null) WalletDetailsScreen(item)
         }
-        composable(Screen.AddWalletItem.route) {
-            AddWalletItemScreen { item ->
-                viewModel.addItem(item)
-                walletNavController.popBackStack() // Go back to the previous screen after adding
-            }
-        }
+        composable(Screen.AddWalletItem.route) { AddWalletItemScreen(viewModel, walletNavController) }
     }
 }

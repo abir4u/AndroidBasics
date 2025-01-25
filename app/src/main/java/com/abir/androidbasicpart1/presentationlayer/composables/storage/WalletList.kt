@@ -17,13 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.abir.androidbasicpart1.businesslayer.viewmodels.storage.WalletViewModel
 import com.abir.androidbasicpart1.datalayer.models.WalletItem
 
 @Composable
 fun WalletList(
     walletItems: List<WalletItem>,
-    onClick: (WalletItem) -> Unit,
-    onDelete: (WalletItem) -> Unit
+    walletNavController: NavHostController,
+    viewModel: WalletViewModel
 ) {
     LazyColumn(
         modifier = Modifier.padding(top = 70.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
@@ -33,7 +35,10 @@ fun WalletList(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
-                    .clickable { onClick(walletItems[itemNumber]) }
+                    .clickable {
+                        walletNavController.navigate("wallet_detail/${walletItems[itemNumber].id}")
+                    /* onClick(walletItems[itemNumber]) */
+                    }
             ) {
                 Box(
                     modifier = Modifier
@@ -51,7 +56,9 @@ fun WalletList(
 
                     // Delete button (aligned to end)
                     IconButton(
-                        onClick = { onDelete(walletItems[itemNumber]) },
+                        onClick = {
+                            viewModel.deleteItem(walletItems[itemNumber])
+                        },
                         modifier = Modifier.align(Alignment.CenterEnd)
                     ) {
                         Icon(Icons.Outlined.Delete, contentDescription = "Delete")

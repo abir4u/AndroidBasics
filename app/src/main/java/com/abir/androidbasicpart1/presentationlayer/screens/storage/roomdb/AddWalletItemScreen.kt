@@ -14,10 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.abir.androidbasicpart1.businesslayer.viewmodels.storage.WalletViewModel
 import com.abir.androidbasicpart1.datalayer.models.WalletItem
 
 @Composable
-fun AddWalletItemScreen(onAdd: (WalletItem) -> Unit) {
+fun AddWalletItemScreen( viewModel: WalletViewModel, walletNavController: NavHostController) {
     var name by remember { mutableStateOf("") }
     var type by remember { mutableStateOf("") }
     var balance by remember { mutableStateOf("") }
@@ -32,7 +34,15 @@ fun AddWalletItemScreen(onAdd: (WalletItem) -> Unit) {
         OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Description") })
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            onAdd(WalletItem(name = name, type = type, balance = balance, description = description))
+            viewModel.addItem(
+                WalletItem(
+                    name = name,
+                    type = type,
+                    balance = balance,
+                    description = description
+                )
+            )
+            walletNavController.popBackStack()
         }) {
             Text("Add Item")
         }
