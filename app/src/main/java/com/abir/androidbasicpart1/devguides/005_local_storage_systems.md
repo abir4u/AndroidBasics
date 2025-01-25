@@ -378,3 +378,190 @@ class WalletViewModel(application: Application) : AndroidViewModel(application) 
     fun deleteItem(item: WalletItem) = viewModelScope.launch { repository.deleteItem(item) }
 }
 ```
+
+### Step 5: UI Components
+Once User enters the Room DB screen which we will call the `WalletHomeScreen`, the 
+User will get options to add a new wallet via `AddWalletItemScreen` and to view all
+added items in `WalletList`. User will be able to click on the Delete icon on each
+item in the `WalletList` to delete them from the list. In this screen, if User
+clicks on one of the items, a detailed view of the item will be shown in a separate
+screen called `WalletDetailsScreen`.
+
+For adding the items via `AddWalletItemScreen`, we will use the `addItem` function
+in our `WalletViewModel`. Similarly, for deleting an item, we will use the function
+`deleteItem`.
+
+**`AddWalletItemScreen`**
+```kotlin
+@Composable
+fun AddWalletItemScreen( viewModel: WalletViewModel, walletNavController: NavHostController) {
+    var name by remember { mutableStateOf("") }
+    var type by remember { mutableStateOf("") }
+    var balance by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier.padding(top = 70.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+    ) {
+        OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
+        OutlinedTextField(value = type, onValueChange = { type = it }, label = { Text("Type") })
+        OutlinedTextField(value = balance, onValueChange = { balance = it }, label = { Text("Balance") })
+        OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Description") })
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            viewModel.addItem(
+                WalletItem(
+                    name = name,
+                    type = type,
+                    balance = balance,
+                    description = description
+                )
+            )
+            walletNavController.popBackStack()
+        }) {
+            Text("Add Item")
+        }
+    }
+}
+```
+
+**`WalletList`**
+```kotlin
+@Composable
+fun WalletList(
+    walletItems: List<WalletItem>,
+    walletNavController: NavHostController,
+    viewModel: WalletViewModel
+) {
+    LazyColumn(
+        modifier = Modifier.padding(top = 70.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
+    ) {
+        items(walletItems.size) { itemNumber ->
+            Card(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .clickable {
+                        walletNavController.navigate("wallet_detail/${walletItems[itemNumber].id}")
+                    }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.align(Alignment.TopStart)
+                    ) {
+                        Text(walletItems[itemNumber].name, style = MaterialTheme.typography.headlineSmall)
+                        Text(walletItems[itemNumber].type, style = MaterialTheme.typography.bodyMedium)
+                        Text("Balance: ${walletItems[itemNumber].balance}", style = MaterialTheme.typography.bodyMedium)
+                    }
+                    IconButton(
+                        onClick = {
+                            viewModel.deleteItem(walletItems[itemNumber])
+                        },
+                        modifier = Modifier.align(Alignment.CenterEnd)
+                    ) {
+                        Icon(Icons.Outlined.Delete, contentDescription = "Delete")
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+**`WalletDetailsScreen`**
+```kotlin
+@Composable
+fun WalletDetailsScreen(item: WalletItem) {
+    Column(
+        modifier = Modifier.padding(top = 70.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+    ) {
+        Text(item.name, style = MaterialTheme.typography.headlineSmall)
+        Text("Type: ${item.type}", style = MaterialTheme.typography.bodyLarge)
+        Text("Balance: ${item.balance}", style = MaterialTheme.typography.bodyLarge)
+        Text("Description: ${item.description}", style = MaterialTheme.typography.bodyMedium)
+    }
+}
+```
+
+Finally, we need to enable navigation between the above screens and create a central
+`WalletHomeScreen` for them to come back to.
+
+So we will first create an empty `WalletHomeScreen` like this:
+```kotlin
+@Composable
+fun WalletHomeScreen(navController: NavController) {}
+```
+
+And then proceed to set up the navigation:
+**`AppNavigation`**
+```kotlin
+sealed class Screen(val route: String) {
+    data object WalletHome : Screen("wallet_home")
+    data object WalletList : Screen("wallet_list")
+    data object AddWalletItem : Screen("add_wallet_item")
+    data object WalletDetails : Screen("wallet_detail/{itemId}")
+    data object StorageHome : Screen("storageHome")
+}
+
+@Composable
+fun WalletScreensStack(viewModel: WalletViewModel = viewModel()) {
+    val walletNavController = rememberNavController()
+    val walletItems by viewModel.allItems.observeAsState(emptyList())
+
+    NavHost(navController = walletNavController, startDestination = Screen.WalletHome.route) {
+        composable(Screen.WalletHome.route) { WalletHomeScreen(walletNavController) }
+        composable(Screen.WalletList.route) { WalletList(walletItems, walletNavController, viewModel) }
+        composable(Screen.WalletDetails.route) { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getString("itemId")?.toIntOrNull()
+            val item = walletItems.find { it.id == itemId }
+            if (item != null) WalletDetailsScreen(item)
+        }
+        composable(Screen.AddWalletItem.route) { AddWalletItemScreen(viewModel, walletNavController) }
+    }
+}
+```
+
+Finally, add buttons to navigate from Home screen to View and Add screens, and complete
+the navigation steps.
+**`WalletHomeScreen`**
+```kotlin
+@Composable
+fun WalletHomeScreen(navController: NavController) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            "Wallet Home",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(16.dp)
+        )
+
+        Button(
+            onClick = { navController.navigate(Screen.WalletList.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Text("View Wallet Items")
+        }
+
+        Button(
+            onClick = { navController.navigate(Screen.AddWalletItem.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Text("Add New Wallet Item")
+        }
+    }
+}
+```
+

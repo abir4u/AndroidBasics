@@ -37,7 +37,6 @@ fun WalletList(
                     .fillMaxWidth()
                     .clickable {
                         walletNavController.navigate("wallet_detail/${walletItems[itemNumber].id}")
-                    /* onClick(walletItems[itemNumber]) */
                     }
             ) {
                 Box(
