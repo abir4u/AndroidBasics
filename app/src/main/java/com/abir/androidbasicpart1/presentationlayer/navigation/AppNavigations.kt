@@ -1,4 +1,4 @@
-package com.abir.androidbasicpart1.presentationlayer.navigation.menu
+package com.abir.androidbasicpart1.presentationlayer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

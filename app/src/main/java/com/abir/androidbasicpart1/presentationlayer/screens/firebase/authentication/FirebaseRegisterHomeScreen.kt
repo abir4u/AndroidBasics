@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.abir.androidbasicpart1.presentationlayer.navigation.menu.Screen
+import com.abir.androidbasicpart1.presentationlayer.navigation.Screen
 
 @Composable
 fun FirebaseRegisterHomeScreen(navController: NavHostController) {

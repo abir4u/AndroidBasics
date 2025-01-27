@@ -19,8 +19,8 @@ import androidx.compose.runtime.remember
 import com.abir.androidbasicpart1.presentationlayer.composables.menu.MenuItem
 import com.abir.androidbasicpart1.presentationlayer.composables.menu.MenuTopBar
 import com.abir.androidbasicpart1.datalayer.staticData.menuItems
-import com.abir.androidbasicpart1.presentationlayer.navigation.menu.FirebaseScreensStack
-import com.abir.androidbasicpart1.presentationlayer.navigation.menu.StorageScreensStack
+import com.abir.androidbasicpart1.presentationlayer.navigation.FirebaseScreensStack
+import com.abir.androidbasicpart1.presentationlayer.navigation.StorageScreensStack
 import com.abir.androidbasicpart1.presentationlayer.screens.ads.AdsHomeScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.api.ApiIntegrationScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.home.HomeScreen
