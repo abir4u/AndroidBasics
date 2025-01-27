@@ -115,4 +115,11 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.ui)
 
+    // Firebase Notification
+    implementation(libs.firebase.messaging)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.appcompat)
+
+    // Firebase Analytics
+    implementation(libs.firebase.analytics)
 }
