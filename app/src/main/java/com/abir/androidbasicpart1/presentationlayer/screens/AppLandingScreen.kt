@@ -24,6 +24,7 @@ import com.abir.androidbasicpart1.presentationlayer.navigation.menu.StorageScree
 import com.abir.androidbasicpart1.presentationlayer.screens.ads.AdsHomeScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.api.ApiIntegrationScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.home.HomeScreen
+import com.abir.androidbasicpart1.presentationlayer.screens.notification.NotificationScreen
 import com.abir.androidbasicpart1.presentationlayer.screens.outsideapp.NavigateOutsideAppScreen
 import kotlinx.coroutines.launch
 
@@ -59,6 +60,7 @@ fun AppLandingScreen() {
                             3 -> route = "firebase"
                             4 -> route = "storage"
                             5 -> route = "ads"
+                            6 -> route = "notification"
                         }
                     }
                 }
@@ -81,6 +83,7 @@ fun AppLandingScreen() {
             "firebase" -> FirebaseScreensStack()
             "storage" -> StorageScreensStack()
             "ads" -> AdsHomeScreen()
+            "notification" -> NotificationScreen()
         }
     }
 }

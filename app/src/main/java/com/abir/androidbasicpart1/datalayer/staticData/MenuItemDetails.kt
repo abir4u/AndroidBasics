@@ -3,11 +3,13 @@ package com.abir.androidbasicpart1.datalayer.staticData
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
@@ -32,8 +34,8 @@ val menuItems = listOf(
     ),
     MenuItemDetails(
         title = "API Integration",
-        selectedIcon = Icons.Filled.Info,
-        unselectedIcon = Icons.Outlined.Info
+        selectedIcon = Icons.Filled.Build,
+        unselectedIcon = Icons.Outlined.Build
     ),
     MenuItemDetails(
         title = "Navigate Out of App",
@@ -53,6 +55,11 @@ val menuItems = listOf(
     ),
     MenuItemDetails(
         title = "Ads",
+        selectedIcon = Icons.Filled.Info,
+        unselectedIcon = Icons.Outlined.Info
+    ),
+    MenuItemDetails(
+        title = "Notification",
         selectedIcon = Icons.Filled.Notifications,
         unselectedIcon = Icons.Outlined.Notifications
     )
