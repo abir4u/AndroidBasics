@@ -2,13 +2,13 @@
 
 ## Developer Guides
 
-- [Introduction](README.md)
-- [Menu Navigation](app/src/main/java/com/abir/androidbasicpart1/devguides/001_menu_navigation_drawer.md)
+- [Introduction](../../../../../../../../README.md)
+- [Menu Navigation](001_menu_navigation_drawer.md)
 - **API Integration**
-- [Splash Screen](app/src/main/java/com/abir/androidbasicpart1/devguides/003_splash_screen.md)
-- [Authentication with Firebase](app/src/main/java/com/abir/androidbasicpart1/devguides/004_firebase_authentications.md)
-- [Local Storage](app/src/main/java/com/abir/androidbasicpart1/devguides/004_firebase_authentications.md)
-- [Notification with FCM](app/src/main/java/com/abir/androidbasicpart1/devguides/006_fcm_notification.md)
+- [Splash Screen](003_splash_screen.md)
+- [Authentication with Firebase](004_firebase_authentications.md)
+- [Local Storage](005_local_storage_systems.md)
+- [Notification with FCM](006_fcm_notification.md)
 
 ## Integrate API
 
