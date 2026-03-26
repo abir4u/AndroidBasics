@@ -6,7 +6,7 @@
 - **Menu Navigation**
 - [API Integration](002_integrate_api.md)
 - [Splash Screen](003_splash_screen.md)
-- [Authentication with Firebase]((004_firebase_authentications.md))
+- [Authentication with Firebase](004_firebase_authentications.md)
 - [Local Storage](005_local_storage_systems.md)
 - [Notification with FCM](006_fcm_notification.md)
 
