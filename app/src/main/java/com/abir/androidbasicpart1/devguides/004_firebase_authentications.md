@@ -1,4 +1,16 @@
-# Firebase Authentications
+# Android Basics
+
+## Developer Guides
+
+- [Introduction](../../../../../../../../README.md)
+- [Menu Navigation](001_menu_navigation_drawer.md)
+- [API Integration](002_integrate_api.md)
+- [Splash Screen](003_splash_screen.md)
+- **Authentication with Firebase**
+- [Local Storage](004_firebase_authentications.md)
+- [Notification with FCM](006_fcm_notification.md)
+
+## Firebase Authentications
 
 I have implemented some of the most commonly used authentication processes in Android apps
 using Firebase. Firebase is a powerful platform that provides a wide array of tools and 
