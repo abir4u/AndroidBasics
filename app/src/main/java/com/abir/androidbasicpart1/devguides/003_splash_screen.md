@@ -1,4 +1,16 @@
-# How to add a splash screen
+# Android Basics
+
+## Developer Guides
+
+- [Introduction](README.md)
+- [Menu Navigation](app/src/main/java/com/abir/androidbasicpart1/devguides/001_menu_navigation_drawer.md)
+- [API Integration](app/src/main/java/com/abir/androidbasicpart1/devguides/002_integrate_api.md)
+- **Splash Screen**
+- [Authentication with Firebase](app/src/main/java/com/abir/androidbasicpart1/devguides/004_firebase_authentications.md)
+- [Local Storage](app/src/main/java/com/abir/androidbasicpart1/devguides/004_firebase_authentications.md)
+- [Notification with FCM](app/src/main/java/com/abir/androidbasicpart1/devguides/006_fcm_notification.md)
+
+## How to add a splash screen
 
 There are two types of splash screens that need to be created. One that works for
 devices running on Android 12 or later, and the other one for devices on Android 11 
